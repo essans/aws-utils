@@ -1,0 +1,11 @@
+Type,CurrentGen,Arch,CpuCores,CpuThreadsPerCore,VCpu,GpuCount,GpuName,MemoryMiB,EbsOnly,InstanceStorage,NetPerf,EbsBwMbps,HasGPU,USDPerHr
+p3.2xlarge,True,x86_64,4,2,8,1,V100,62464,default,,Up to 10 Gigabit,1750,True,3.06
+p5.4xlarge,True,x86_64,8,2,16,1,H100,262144,default,3800.0,100 Gigabit,10000,True,6.88
+p3.8xlarge,True,x86_64,16,2,32,4,V100,249856,default,,10 Gigabit,7000,True,12.24
+p4d.24xlarge,True,x86_64,48,2,96,8,A100,1179648,default,8000.0,4x 100 Gigabit,19000,True,21.957642
+p3.16xlarge,True,x86_64,32,2,64,8,V100,499712,default,,25 Gigabit,14000,True,24.48
+p4de.24xlarge,True,x86_64,48,2,96,8,A100,1179648,default,8000.0,4x 100 Gigabit,19000,True,27.44705
+p3dn.24xlarge,True,x86_64,48,2,96,8,V100,786432,default,1800.0,100 Gigabit,19000,True,31.212
+p5.48xlarge,True,x86_64,96,2,192,8,H100,2097152,default,30400.0,3200 Gigabit,80000,True,55.04
+p5en.48xlarge,True,x86_64,96,2,192,8,H200,2097152,default,30400.0,3200 Gigabit,100000,True,63.296
+p6-b200.48xlarge,True,x86_64,96,2,192,8,B200,2097152,default,30400.0,3200 Gigabit,100000,True,113.9328

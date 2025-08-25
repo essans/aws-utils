@@ -1,0 +1,13 @@
+Type,CurrentGen,Arch,CpuCores,CpuThreadsPerCore,VCpu,GpuCount,GpuName,MemoryMiB,EbsOnly,InstanceStorage,NetPerf,EbsBwMbps,HasGPU,USDPerHr
+g4ad.xlarge,True,x86_64,2,2,4,1,Radeon Pro V520,16384,default,150,Up to 10 Gigabit,400,True,0.37853
+g4dn.xlarge,True,x86_64,2,2,4,1,T4,16384,default,125,Up to 25 Gigabit,950,True,0.526
+g4ad.2xlarge,True,x86_64,4,2,8,1,Radeon Pro V520,32768,default,300,Up to 10 Gigabit,800,True,0.54117
+g4dn.2xlarge,True,x86_64,4,2,8,1,T4,32768,default,225,Up to 25 Gigabit,1150,True,0.752
+g4ad.4xlarge,True,x86_64,8,2,16,1,Radeon Pro V520,65536,default,600,Up to 10 Gigabit,1580,True,0.867
+g4dn.4xlarge,True,x86_64,8,2,16,1,T4,65536,default,225,Up to 25 Gigabit,4750,True,1.204
+g4ad.8xlarge,True,x86_64,16,2,32,2,Radeon Pro V520,131072,default,1200,15 Gigabit,3170,True,1.734
+g4dn.8xlarge,True,x86_64,16,2,32,1,T4,131072,default,900,50 Gigabit,9500,True,2.176
+g4ad.16xlarge,True,x86_64,32,2,64,4,Radeon Pro V520,262144,default,2400,25 Gigabit,6300,True,3.468
+g4dn.12xlarge,True,x86_64,24,2,48,4,T4,196608,default,900,50 Gigabit,9500,True,3.912
+g4dn.16xlarge,True,x86_64,32,2,64,1,T4,262144,default,900,50 Gigabit,9500,True,4.352
+g4dn.metal,True,x86_64,48,2,96,8,T4,393216,default,1800,100 Gigabit,19000,True,7.824

@@ -1,0 +1,26 @@
+Type,CurrentGen,Arch,CpuCores,CpuThreadsPerCore,VCpu,GpuCount,GpuName,MemoryMiB,EbsOnly,InstanceStorage,NetPerf,EbsBwMbps,HasGPU,USDPerHr
+m6g.xlarge,True,arm64,4,1,4,,,16384,default,,Up to 10 Gigabit,1188,False,0.154
+m7g.xlarge,True,arm64,4,1,4,,,16384,default,,Up to 12.5 Gigabit,1250,False,0.1632
+m5a.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 10 Gigabit,1085,False,0.172
+m6a.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 12.5 Gigabit,1250,False,0.1728
+m8g.xlarge,True,arm64,4,1,4,,,16384,default,,Up to 12.5 Gigabit,1250,False,0.17952
+m6gd.xlarge,True,arm64,4,1,4,,,16384,default,237.0,Up to 10 Gigabit,1188,False,0.1808
+m7i-flex.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 12.5 Gigabit,625,False,0.19152
+m5.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 10 Gigabit,1150,False,0.192
+m6i.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 12.5 Gigabit,1250,False,0.192
+m4.xlarge,False,x86_64,2,2,4,,,16384,default,,High,750,False,0.2
+m7i.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 12.5 Gigabit,1250,False,0.2016
+m5ad.xlarge,True,x86_64,2,2,4,,,16384,default,150.0,Up to 10 Gigabit,1085,False,0.206
+m7gd.xlarge,True,arm64,4,1,4,,,16384,default,237.0,Up to 12.5 Gigabit,1250,False,0.2136
+m5d.xlarge,True,x86_64,2,2,4,,,16384,default,150.0,Up to 10 Gigabit,1150,False,0.226
+m8gd.xlarge,True,arm64,4,1,4,,,16384,default,237.0,Up to 12.5 Gigabit,1250,False,0.23064
+m7a.xlarge,True,x86_64,4,1,4,,,16384,default,,Up to 12.5 Gigabit,1250,False,0.23184
+m6id.xlarge,True,x86_64,2,2,4,,,16384,default,237.0,Up to 12.5 Gigabit,1250,False,0.2373
+m5n.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 25 Gigabit,1150,False,0.238
+m3.xlarge,False,x86_64,2,2,4,,,15360,supported,80.0,High,500,False,0.266
+m5dn.xlarge,True,x86_64,2,2,4,,,16384,default,150.0,Up to 25 Gigabit,1150,False,0.272
+m6in.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 30 Gigabit,3125,False,0.27846
+m6idn.xlarge,True,x86_64,2,2,4,,,16384,default,237.0,Up to 30 Gigabit,3125,False,0.31824
+m5zn.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 25 Gigabit,1564,False,0.3303
+m1.xlarge,False,x86_64,4,1,4,,,15360,supported,1680.0,High,1000,False,0.35
+m2.2xlarge,False,x86_64,4,1,4,,,35020,supported,850.0,Moderate,500,False,0.49

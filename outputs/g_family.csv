@@ -1,0 +1,50 @@
+Type,CurrentGen,Arch,CpuCores,CpuThreadsPerCore,VCpu,GpuCount,GpuName,MemoryMiB,EbsOnly,InstanceStorage,NetPerf,EbsBwMbps,HasGPU,USDPerHr
+g6f.large,True,x86_64,1,2,2,0,L4,8192,default,100.0,Up to 10 Gigabit,936,True,0.202
+g6f.xlarge,True,x86_64,2,2,4,0,L4,16384,default,100.0,Up to 10 Gigabit,1000,True,0.2375
+g4ad.xlarge,True,x86_64,2,2,4,1,Radeon Pro V520,16384,default,150.0,Up to 10 Gigabit,400,True,0.37853
+g5g.xlarge,True,arm64,4,1,4,1,T4g,8192,default,,Up to 10 Gigabit,1188,True,0.42
+g6f.2xlarge,True,x86_64,4,2,8,0,L4,32768,default,200.0,Up to 10 Gigabit,2000,True,0.475
+g4dn.xlarge,True,x86_64,2,2,4,1,T4,16384,default,125.0,Up to 25 Gigabit,950,True,0.526
+g4ad.2xlarge,True,x86_64,4,2,8,1,Radeon Pro V520,32768,default,300.0,Up to 10 Gigabit,800,True,0.54117
+g5g.2xlarge,True,arm64,8,1,8,1,T4g,16384,default,,Up to 10 Gigabit,2375,True,0.556
+g4dn.2xlarge,True,x86_64,4,2,8,1,T4,32768,default,225.0,Up to 25 Gigabit,1150,True,0.752
+g6.xlarge,True,x86_64,2,2,4,1,L4,16384,default,250.0,Up to 10 Gigabit,1000,True,0.8048
+g5g.4xlarge,True,arm64,16,1,16,1,T4g,32768,default,,Up to 10 Gigabit,4750,True,0.828
+g4ad.4xlarge,True,x86_64,8,2,16,1,Radeon Pro V520,65536,default,600.0,Up to 10 Gigabit,1580,True,0.867
+g6f.4xlarge,True,x86_64,8,2,16,0,L4,65536,default,450.0,Up to 25 Gigabit,6000,True,0.95
+g6.2xlarge,True,x86_64,4,2,8,1,L4,32768,default,450.0,Up to 10 Gigabit,2000,True,0.9776
+g5.xlarge,True,x86_64,2,2,4,1,A10G,16384,default,250.0,Up to 10 Gigabit,700,True,1.006
+gr6f.4xlarge,True,x86_64,8,2,16,0,L4,131072,default,450.0,Up to 25 Gigabit,8000,True,1.066
+g4dn.4xlarge,True,x86_64,8,2,16,1,T4,65536,default,225.0,Up to 25 Gigabit,4750,True,1.204
+g5.2xlarge,True,x86_64,4,2,8,1,A10G,32768,default,450.0,Up to 10 Gigabit,850,True,1.212
+g6.4xlarge,True,x86_64,8,2,16,1,L4,65536,default,600.0,Up to 25 Gigabit,8000,True,1.3232
+g5g.8xlarge,True,arm64,32,1,32,1,T4g,65536,default,,12 Gigabit,9500,True,1.372
+gr6.4xlarge,True,x86_64,8,2,16,1,L4,131072,default,600.0,Up to 25 Gigabit,8000,True,1.5392
+g5.4xlarge,True,x86_64,8,2,16,1,A10G,65536,default,600.0,Up to 25 Gigabit,4750,True,1.624
+g4ad.8xlarge,True,x86_64,16,2,32,2,Radeon Pro V520,131072,default,1200.0,15 Gigabit,3170,True,1.734
+g6e.xlarge,True,x86_64,2,2,4,1,L40S,32768,default,250.0,Up to 20 Gigabit,1000,True,1.861
+g6.8xlarge,True,x86_64,16,2,32,1,L4,131072,default,900.0,25 Gigabit,16000,True,2.0144
+g4dn.8xlarge,True,x86_64,16,2,32,1,T4,131072,default,900.0,50 Gigabit,9500,True,2.176
+g6e.2xlarge,True,x86_64,4,2,8,1,L40S,65536,default,450.0,Up to 20 Gigabit,2000,True,2.24208
+gr6.8xlarge,True,x86_64,16,2,32,1,L4,262144,default,900.0,25 Gigabit,16000,True,2.4464
+g5.8xlarge,True,x86_64,16,2,32,1,A10G,131072,default,900.0,25 Gigabit,16000,True,2.448
+g5g.metal,True,arm64,64,1,64,2,T4g,131072,default,,25 Gigabit,19000,True,2.744
+g5g.16xlarge,True,arm64,64,1,64,2,T4g,131072,default,,25 Gigabit,19000,True,2.744
+g6e.4xlarge,True,x86_64,8,2,16,1,L40S,131072,default,600.0,20 Gigabit,8000,True,3.00424
+g6.16xlarge,True,x86_64,32,2,64,1,L4,262144,default,1880.0,25 Gigabit,20000,True,3.3968
+g4ad.16xlarge,True,x86_64,32,2,64,4,Radeon Pro V520,262144,default,2400.0,25 Gigabit,6300,True,3.468
+g4dn.12xlarge,True,x86_64,24,2,48,4,T4,196608,default,900.0,50 Gigabit,9500,True,3.912
+g5.16xlarge,True,x86_64,32,2,64,1,A10G,262144,default,1900.0,25 Gigabit,16000,True,4.096
+g4dn.16xlarge,True,x86_64,32,2,64,1,T4,262144,default,900.0,50 Gigabit,9500,True,4.352
+g6e.8xlarge,True,x86_64,16,2,32,1,L40S,262144,default,900.0,25 Gigabit,16000,True,4.52856
+g6.12xlarge,True,x86_64,24,2,48,4,L4,196608,default,3760.0,40 Gigabit,20000,True,4.6016
+g5.12xlarge,True,x86_64,24,2,48,4,A10G,196608,default,3800.0,40 Gigabit,16000,True,5.672
+g6.24xlarge,True,x86_64,48,2,96,4,L4,393216,default,3760.0,50 Gigabit,30000,True,6.6752
+g6e.16xlarge,True,x86_64,32,2,64,1,L40S,524288,default,1900.0,35 Gigabit,20000,True,7.57719
+g4dn.metal,True,x86_64,48,2,96,8,T4,393216,default,1800.0,100 Gigabit,19000,True,7.824
+g5.24xlarge,True,x86_64,48,2,96,4,A10G,393216,default,3800.0,50 Gigabit,19000,True,8.144
+g6e.12xlarge,True,x86_64,24,2,48,4,L40S,393216,default,3800.0,100 Gigabit,20000,True,10.49264
+g6.48xlarge,True,x86_64,96,2,192,8,L4,786432,default,7520.0,100 Gigabit,60000,True,13.3504
+g6e.24xlarge,True,x86_64,48,2,96,4,L40S,786432,default,3800.0,200 Gigabit,30000,True,15.06559
+g5.48xlarge,True,x86_64,96,2,192,8,A10G,786432,default,7600.0,100 Gigabit,19000,True,16.288
+g6e.48xlarge,True,x86_64,96,2,192,8,L40S,1572864,default,7600.0,400 Gigabit,60000,True,30.13118

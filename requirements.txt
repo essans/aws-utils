@@ -1,0 +1,12 @@
+#when using a conda env
+#conda list --export > requirements.txt
+
+
+#pip freeze > requirements.txt
+#pip install -r requirements.txt
+
+#pip install pipreqs
+#pipreqs /home/project/location
+
+pyYAML==6.0.2,
+pandas==2.2.2
