@@ -206,24 +206,31 @@ aws ec2 create-key-pair \
 ```
 
 Then:
+<br>
+
 ```
 chmod 400 default_ed25519.pem>
 ```
+<br>
 
 __(2a) Update default values in YAML spec file if needed__
-`launch/t4g_nano_8gb_ubuntu_2204_ARM.yaml` 
+`launch/t4g_nano_8gb_ubuntu_2204_ARM.yaml` <br>
 (example spec file for t4g.nano ARM instance with Ubuntu 22.04 and 8GB volume)
 
-__or() Copy and modify an existing YAML spec file from `launch/` folder__
+__or(2b) Copy and modify an existing YAML spec file from `launch/` folder__
+
 ```
 cp launch/t4g_nano_8gb_ubuntu_2204_ARM.yaml my_instance.yaml
 ```
+<br>
 
 __(3) Create new security group if needed and update YAML spec file__
 
 View existing security groups:
 ```
 aws ec2 describe-security-groups --output json
+```
+<br>
 
 Create new security group:
 ```
@@ -240,9 +247,9 @@ ec2_launch_from_yaml.py t4g_nano_8gb_ubuntu_2204_ARM.yaml
 <br>
 
 
-## In case needed:
+### In case needed:
 
-### Describe available VPCs
+__Describe available VPCs__
 ```
 aws ec2 describe-vpcs \
   --query "Vpcs[*].{ID:VpcId, Name:Tags[?Key=='Name']|[0].Value, CIDR:CidrBlock,State:State, IsDefault:IsDefault}" \
@@ -251,12 +258,12 @@ aws ec2 describe-vpcs \
 
 aws ec2 describe-vpcs --region us-east-1 --output json
 
-# will use default region from ~/.aws/config if not specified
+will use default region from ~/.aws/config if not specified
 ```
 
 <br>
 
-### Describe available subnets
+__Describe available subnets__
 ```
 aws ec2 describe-subnets \
   --query "Subnets[*].{ID:SubnetId, VpcId:VpcId, CIDR:CidrBlock, AZ:AvailabilityZone, MapPublicIpOnLaunch:MapPublicIpOnLaunch, State:State}" \
@@ -265,13 +272,13 @@ aws ec2 describe-subnets \
 aws ec2 describe-subnets --output json
 ```
 
-### Security groups
+__Security groups__
 ```
 aws ec2 describe-security-groups --output json
 ```
 <br>
 
-### Create new security group
+__Create new security group__
 ```
 SG_ID=$(aws ec2 create-security-group \
   --group-name "sg_name" \
@@ -289,7 +296,7 @@ aws ec2 create-tags \
 <br>
 
 
-### Route tables
+__Route tables__
 ```
 aws ec2 describe-route-tables \
   --query "RouteTables[*].{ID:RouteTableId, VpcId:VpcId, Associations:Associations}"
@@ -297,7 +304,7 @@ aws ec2 describe-route-tables \
 <br>
 
 
-### Network ACLs
+__Network ACLs__
 ```
 aws ec2 describe-network-acls --output table
 ```
