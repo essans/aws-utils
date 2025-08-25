@@ -1,7 +1,9 @@
 ## aws
 
 ### Overview
-#### Collection of AWS utilities, mostly in bash and python
+Collection of AWS utilities, mostly in bash and python
+
+---
 
 ### System stuff, environment set-up etc
 
@@ -18,6 +20,7 @@ pip install -r requirements.txt
 chmod +x /scripts/*
 
 ```
+---
 
 ### Environment set-up
 __`.bash_profile` or `.zshrc` file should look something like:__
