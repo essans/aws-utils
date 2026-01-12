@@ -1,0 +1,80 @@
+# COPY THIS IF UPDATING INSTANCETYPE, OS VERSION OR VOLUME SIZE !
+# aws ec2 run-instances --generate-cli-skeleton > skeleton.json
+
+# attributes to confirm or update (Notes section is ignored by AWS):
+#   > TagSpecification --> names for instance and volume
+#   > ImageId [run ec2_images_Ubuntu server 22 to find]
+#   > InstanceType [run ec2_specs <pattern> <vcpus_filter> for example to find]
+#   > KeyName --> update if needed
+#   > VolumeSize --> update if needed
+#   > IMPORTANT: NetworkInterfaces: SubnetId
+#   > IMPORTANT: NetworkInterfaces: Groups
+
+Notes:
+  - instanceFamily: g4dn
+    gpu: "1 x NVIDIA T4 (16GB)"
+    vCPUs: 4   # default layout = 2 cores x 2 threads
+    memory(MiB): 16384
+    instanceStore: 1 x 125 GB NVMe
+    netPerf: Up to 25 Gbps
+    ebsBWMbps: Up to 3.5
+    usdPHr: 0.526
+
+TagSpecifications:
+  - ResourceType: instance
+    Tags:
+      - Key: Name
+        Value: ec2_node
+  - ResourceType: volume
+    Tags:
+      - Key: Name
+        Value: ec2_node
+
+ImageId: ami-0bbdd8c17ed981ef9
+InstanceType: g4dn.xlarge
+KeyName: default_ed25519
+MinCount: 1
+MaxCount: 1
+
+IamInstanceProfile:
+  Name: AWSCloud9SSMInstanceProfile
+
+# Default: omit CpuOptions to keep 2x2 (4 vCPUs)
+# ALT: SMT OFF (drops to 2 vCPUs on g4dn.xlarge)
+# CpuOptions:
+#   CoreCount: 2
+#   ThreadsPerCore: 1
+
+BlockDeviceMappings:
+  - DeviceName: /dev/sda1
+    Ebs:
+      DeleteOnTermination: true
+      Encrypted: false
+      Iops: 3000
+      VolumeSize: 64
+      VolumeType: gp3
+      Throughput: 64
+
+NetworkInterfaces:
+  - SubnetId: subnet-040c41a8375fb03fa
+    AssociatePublicIpAddress: true
+    DeleteOnTermination: true
+    DeviceIndex: 0
+    Groups:
+      - sg-0c1f8430a8cf53bec
+
+InstanceInitiatedShutdownBehavior: stop
+
+MetadataOptions:
+  HttpEndpoint: enabled
+  HttpPutResponseHopLimit: 2
+  HttpTokens: required
+  InstanceMetadataTags: enabled
+
+PrivateDnsNameOptions:
+  HostnameType: ip-name
+  EnableResourceNameDnsARecord: false
+  EnableResourceNameDnsAAAARecord: false
+
+# Optional: bootstrap NVIDIA drivers / CUDA via user data (must be base64-encoded for CLI)
+# UserData: "<base64-of-your-cloud-init-or-bash-setup>"

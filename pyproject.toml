@@ -1,0 +1,111 @@
+[build-system]
+requires = ["setuptools>=65.5", "wheel"]  #or use 61.0 for max compatability
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aws-utils" # | lower | replace(' ', '-') }}"
+version = "0.1.0"
+description = "Collection of AWS EC2 utilities, mostly in bash and python"
+readme = "README.md"
+requires-python = ">=3.12"
+
+license = { text = "MIT" } 
+
+dependencies = [
+  "boto3>=1.35,<1.36",
+  "numpy<2,>=1.25", 
+  "pandas>=2.2,<3", 
+  "pyarrow>=12.0,<22.2",
+  "PyYAML>=6.0,<7",
+  "tqdm>=4.67,<5"
+]
+
+
+[project.optional-dependencies]
+dev = [
+  "ipykernel>=6.29,<7",
+  "ipython>=8.23,<9",
+  "jupyter_client>=8.6,<9",
+  "jupyter_core>=5.7,<6",
+  "ipywidgets>=8.1,<9",
+  "ruff>=0.6",
+  "mypy>=1.13",
+  "pytest>=8",
+  "types-PyYAML>=6.0"
+]
+
+#torch = [
+#  "torch>=2.2,<3"
+#]
+
+[tool.setuptools]
+package-dir = {"" = "src"}  # pip install -e .
+
+[tool.setuptools.packages.find]
+where = ["src"]
+#namespaces = false
+
+[project.urls]
+Homepage = "https://github.com/essans/aws-utils"
+Repository = "https://github.com/essans/aws=utils"
+
+# ------------------------------
+# Ruff: linting + style
+# ------------------------------
+[tool.ruff]
+target-version = "py311"
+line-length = 80
+src = ["src", "tests"]
+exclude = [
+  ".git",
+  ".venv",
+  ".mypy_cache",
+  ".ruff_cache",
+]
+
+[tool.ruff.lint]
+# General useful rule sets; you can tune this later.
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort
+  "B",   # bugbear
+  "UP",  # pyupgrade (keeps code modern)
+]
+ignore = [
+  "E203",  # spacing around ':', works better with Black if you add it later
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["aws-utils", "gsd"]
+force-single-line = true
+
+# Per-file ignores if you want tests less strict, e.g.:
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]  # ignore docstring rules in tests, if you enable them later
+
+# ------------------------------
+# mypy: type checking
+# ------------------------------
+[tool.mypy]
+python_version = "3.12"
+mypy_path = ["src"]
+
+# Make mypy care about types (but not full "strict" yet)
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+ignore_missing_imports = true
+
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+
+# If you start using torch or transformers heavily, you may add stubs here:
+# plugins = []
+
+# You can relax type checking in notebooks or scripts if needed:
+[[tool.mypy.overrides]]
+module = "notebooks.*"
+ignore_errors = true

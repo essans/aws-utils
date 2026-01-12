@@ -1,0 +1,213 @@
+{
+    "BlockDeviceMappings": [
+        {
+            "Ebs": {
+                "DeleteOnTermination": true,
+                "Iops": 0,
+                "SnapshotId": "",
+                "VolumeSize": 0,
+                "VolumeType": "standard",
+                "KmsKeyId": "",
+                "Throughput": 0,
+                "OutpostArn": "",
+                "AvailabilityZone": "",
+                "Encrypted": true,
+                "VolumeInitializationRate": 0,
+                "AvailabilityZoneId": ""
+            },
+            "NoDevice": "",
+            "DeviceName": "",
+            "VirtualName": ""
+        }
+    ],
+    "ImageId": "",
+    "InstanceType": "a1.medium",
+    "Ipv6AddressCount": 0,
+    "Ipv6Addresses": [
+        {
+            "Ipv6Address": "",
+            "IsPrimaryIpv6": true
+        }
+    ],
+    "KernelId": "",
+    "KeyName": "",
+    "MaxCount": 0,
+    "MinCount": 0,
+    "Monitoring": {
+        "Enabled": true
+    },
+    "Placement": {
+        "AvailabilityZoneId": "",
+        "Affinity": "",
+        "GroupName": "",
+        "PartitionNumber": 0,
+        "HostId": "",
+        "Tenancy": "default",
+        "SpreadDomain": "",
+        "HostResourceGroupArn": "",
+        "GroupId": "",
+        "AvailabilityZone": ""
+    },
+    "RamdiskId": "",
+    "SecurityGroupIds": [
+        ""
+    ],
+    "SecurityGroups": [
+        ""
+    ],
+    "SubnetId": "",
+    "UserData": "",
+    "ElasticGpuSpecification": [
+        {
+            "Type": ""
+        }
+    ],
+    "ElasticInferenceAccelerators": [
+        {
+            "Type": "",
+            "Count": 0
+        }
+    ],
+    "TagSpecifications": [
+        {
+            "ResourceType": "capacity-reservation",
+            "Tags": [
+                {
+                    "Key": "",
+                    "Value": ""
+                }
+            ]
+        }
+    ],
+    "LaunchTemplate": {
+        "LaunchTemplateId": "",
+        "LaunchTemplateName": "",
+        "Version": ""
+    },
+    "InstanceMarketOptions": {
+        "MarketType": "spot",
+        "SpotOptions": {
+            "MaxPrice": "",
+            "SpotInstanceType": "one-time",
+            "BlockDurationMinutes": 0,
+            "ValidUntil": "1970-01-01T00:00:00",
+            "InstanceInterruptionBehavior": "hibernate"
+        }
+    },
+    "CreditSpecification": {
+        "CpuCredits": ""
+    },
+    "CpuOptions": {
+        "CoreCount": 0,
+        "ThreadsPerCore": 0,
+        "AmdSevSnp": "enabled"
+    },
+    "CapacityReservationSpecification": {
+        "CapacityReservationPreference": "capacity-reservations-only",
+        "CapacityReservationTarget": {
+            "CapacityReservationId": "",
+            "CapacityReservationResourceGroupArn": ""
+        }
+    },
+    "HibernationOptions": {
+        "Configured": true
+    },
+    "LicenseSpecifications": [
+        {
+            "LicenseConfigurationArn": ""
+        }
+    ],
+    "MetadataOptions": {
+        "HttpTokens": "optional",
+        "HttpPutResponseHopLimit": 0,
+        "HttpEndpoint": "disabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+    },
+    "EnclaveOptions": {
+        "Enabled": true
+    },
+    "PrivateDnsNameOptions": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": true,
+        "EnableResourceNameDnsAAAARecord": true
+    },
+    "MaintenanceOptions": {
+        "AutoRecovery": "disabled"
+    },
+    "DisableApiStop": true,
+    "EnablePrimaryIpv6": true,
+    "NetworkPerformanceOptions": {
+        "BandwidthWeighting": "default"
+    },
+    "Operator": {
+        "Principal": ""
+    },
+    "DryRun": true,
+    "DisableApiTermination": true,
+    "InstanceInitiatedShutdownBehavior": "stop",
+    "PrivateIpAddress": "",
+    "ClientToken": "",
+    "AdditionalInfo": "",
+    "NetworkInterfaces": [
+        {
+            "AssociatePublicIpAddress": true,
+            "DeleteOnTermination": true,
+            "Description": "",
+            "DeviceIndex": 0,
+            "Groups": [
+                ""
+            ],
+            "Ipv6AddressCount": 0,
+            "Ipv6Addresses": [
+                {
+                    "Ipv6Address": "",
+                    "IsPrimaryIpv6": true
+                }
+            ],
+            "NetworkInterfaceId": "",
+            "PrivateIpAddress": "",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateIpAddress": ""
+                }
+            ],
+            "SecondaryPrivateIpAddressCount": 0,
+            "SubnetId": "",
+            "AssociateCarrierIpAddress": true,
+            "InterfaceType": "",
+            "NetworkCardIndex": 0,
+            "Ipv4Prefixes": [
+                {
+                    "Ipv4Prefix": ""
+                }
+            ],
+            "Ipv4PrefixCount": 0,
+            "Ipv6Prefixes": [
+                {
+                    "Ipv6Prefix": ""
+                }
+            ],
+            "Ipv6PrefixCount": 0,
+            "PrimaryIpv6": true,
+            "EnaSrdSpecification": {
+                "EnaSrdEnabled": true,
+                "EnaSrdUdpSpecification": {
+                    "EnaSrdUdpEnabled": true
+                }
+            },
+            "ConnectionTrackingSpecification": {
+                "TcpEstablishedTimeout": 0,
+                "UdpStreamTimeout": 0,
+                "UdpTimeout": 0
+            },
+            "EnaQueueCount": 0
+        }
+    ],
+    "IamInstanceProfile": {
+        "Arn": "",
+        "Name": ""
+    },
+    "EbsOptimized": true
+}

@@ -1,0 +1,51 @@
+{
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.analysis.extraPaths": ["${workspaceFolder}/src", "${workspaceFolder}/configs"],
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${workspaceFolder}/src:${workspaceFolder}/configs"
+    },
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "python.defaultInterpreterPath": "~/environments/venv/bin/python",
+
+    // Prefer modern, reasonably strict type checking
+    "python.analysis.typeCheckingMode": "basic", // "standard"
+
+    // --- Editor niceties for Python ---
+
+    "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.python", // or ms-python.black-formatter if you add Black
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.rulers": [100]
+    },
+
+    // --- Testing (pytest) ---
+
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": [
+      "tests"
+    ],
+
+    // --- Mypy (type checking) ---
+
+    // If you use the "Mypy Type Checker" VS Code extension:
+    "mypy-type-checker.args": [
+      "--config-file",
+      "${workspaceFolder}/pyproject.toml"
+    ],
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    "mypy-type-checker.loggingLevel": "warning", 
+        // now done via cmd-p -> developer set log level --> mypy 
+    "mypy-type-checker.showNotifications": "off", 
+        // keep noise low; check panel for details
+        // now handles in the mypy extention settings
+
+    // --- Ruff (linting & formatting assistance) ---
+
+    // Optionally let Ruff auto-fix on save (explicit means you can disable per-file)
+     //"editor.codeActionsOnSave": {
+     //  "source.fixAll.ruff": "explicit"
+     //},
+  }

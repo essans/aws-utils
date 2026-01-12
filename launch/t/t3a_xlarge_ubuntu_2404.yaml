@@ -1,0 +1,75 @@
+# COPY THIS IF UPDATING INSTANCETYPE, OS VERSION OR VOLUME SIZE !
+# aws ec2 run-instances --generate-cli-skeleton > skeleton.json
+
+# attributes to confirm or update (Notes section is ignored by AWS):
+#   > TagSpecification --> names for instances and volume
+#   > ImageId [ec2_images_ubuntu server 22 for example to find]
+#   > InstanceType [run ec2_specs <pattern> <vcpus_filter> for example to find]
+#   > KeyName --> update default if needed
+#   > VolumeSize --> updated if needed
+#   > IMPORTANT: NetworkInterfaces: SubnetId (currently using default_subnet us-east-1a)
+#   > IMPORTANT: NetworkInterfaces: Groups (currently using default_sg)
+
+Notes:
+  - instanceFamily: t3a
+    vCPUs: 4
+    cpuCores: 2
+    threadsPerCore: 2
+    memory(MiB): 16384
+    netPerf: Up to 5 Gigabit
+    ebsBWMbps: 695
+    usdPHr: 0.1504
+
+TagSpecifications:
+  - ResourceType: instance
+    Tags:
+      - Key: Name
+        Value: ec2_node
+  - ResourceType: volume
+    Tags:
+      - Key: Name
+        Value: ec2_node
+
+ImageId: ami-0b6c6ebed2801a5cb
+InstanceType: t3a.xlarge
+KeyName: default_ed25519
+MinCount: 1
+MaxCount: 1
+
+IamInstanceProfile:
+  Name: AWSCloud9SSMInstanceProfile
+
+BlockDeviceMappings:
+  - DeviceName: /dev/sda1
+    Ebs:
+      DeleteOnTermination: true
+      Encrypted: false
+      Iops: 3000
+      VolumeSize: 32
+      VolumeType: gp3
+      Throughput: 125
+
+NetworkInterfaces:
+  - SubnetId: subnet-040c41a8375fb03fa
+    AssociatePublicIpAddress: true
+    DeleteOnTermination: true
+    DeviceIndex: 0
+    Groups:
+      - sg-0c1f8430a8cf53bec
+
+InstanceInitiatedShutdownBehavior: stop
+
+MetadataOptions:
+  HttpEndpoint: enabled
+  HttpPutResponseHopLimit: 2
+  HttpTokens: required
+  InstanceMetadataTags: enabled
+
+PrivateDnsNameOptions:
+  HostnameType: ip-name
+  EnableResourceNameDnsARecord: false
+  EnableResourceNameDnsAAAARecord: false
+
+# Only needed for burstable families ("t1", "t2", "t3", "t3a", "t4g")
+CreditSpecification:
+  CpuCredits: unlimited

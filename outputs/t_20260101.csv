@@ -1,0 +1,33 @@
+Type,CurrentGen,Arch,CpuCores,CpuThreadsPerCore,VCpu,GpuCount,GpuName,MemoryMiB,EbsOnly,InstanceStorage,NetPerf,EbsBwMbps,HasGPU,USDPerHr
+t4g.nano,True,arm64,2,1,2,,,512,default,,Up to 5 Gigabit,43.0,False,0.0042
+t3a.nano,True,x86_64,1,2,2,,,512,default,,Up to 5 Gigabit,45.0,False,0.0047
+t3.nano,True,x86_64,1,2,2,,,512,default,,Up to 5 Gigabit,43.0,False,0.0052
+t2.nano,True,"i386,x86_64",1,1,1,,,512,unsupported,,Low to Moderate,,False,0.0058
+t4g.micro,True,arm64,2,1,2,,,1024,default,,Up to 5 Gigabit,87.0,False,0.0084
+t3a.micro,True,x86_64,1,2,2,,,1024,default,,Up to 5 Gigabit,90.0,False,0.0094
+t3.micro,True,x86_64,1,2,2,,,1024,default,,Up to 5 Gigabit,87.0,False,0.0104
+t2.micro,True,"i386,x86_64",1,1,1,,,1024,unsupported,,Low to Moderate,,False,0.0116
+t4g.small,True,arm64,2,1,2,,,2048,default,,Up to 5 Gigabit,174.0,False,0.0168
+t3a.small,True,x86_64,1,2,2,,,2048,default,,Up to 5 Gigabit,175.0,False,0.0188
+t1.micro,False,"i386,x86_64",1,1,1,,,627,unsupported,,Very Low,,False,0.02
+t3.small,True,x86_64,1,2,2,,,2048,default,,Up to 5 Gigabit,174.0,False,0.0208
+t2.small,True,"i386,x86_64",1,1,1,,,2048,unsupported,,Low to Moderate,,False,0.023
+t4g.medium,True,arm64,2,1,2,,,4096,default,,Up to 5 Gigabit,347.0,False,0.0336
+t3a.medium,True,x86_64,1,2,2,,,4096,default,,Up to 5 Gigabit,350.0,False,0.0376
+t3.medium,True,x86_64,1,2,2,,,4096,default,,Up to 5 Gigabit,347.0,False,0.0416
+t2.medium,True,"i386,x86_64",2,1,2,,,4096,unsupported,,Low to Moderate,,False,0.0464
+t4g.large,True,arm64,2,1,2,,,8192,default,,Up to 5 Gigabit,695.0,False,0.0672
+t3a.large,True,x86_64,1,2,2,,,8192,default,,Up to 5 Gigabit,695.0,False,0.0752
+t3.large,True,x86_64,1,2,2,,,8192,default,,Up to 5 Gigabit,695.0,False,0.0832
+t2.large,True,x86_64,2,1,2,,,8192,unsupported,,Low to Moderate,,False,0.0928
+t4g.xlarge,True,arm64,4,1,4,,,16384,default,,Up to 5 Gigabit,695.0,False,0.1344
+t3a.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 5 Gigabit,695.0,False,0.1504
+t3.xlarge,True,x86_64,2,2,4,,,16384,default,,Up to 5 Gigabit,695.0,False,0.1664
+t2.xlarge,True,x86_64,4,1,4,,,16384,unsupported,,Moderate,,False,0.1856
+t4g.2xlarge,True,arm64,8,1,8,,,32768,default,,Up to 5 Gigabit,695.0,False,0.2688
+t3a.2xlarge,True,x86_64,4,2,8,,,32768,default,,Up to 5 Gigabit,695.0,False,0.3008
+t3.2xlarge,True,x86_64,4,2,8,,,32768,default,,Up to 5 Gigabit,695.0,False,0.3328
+t2.2xlarge,True,x86_64,8,1,8,,,32768,unsupported,,Moderate,,False,0.3712
+trn1.2xlarge,True,x86_64,4,2,8,,,32768,default,474.0,Up to 12.5 Gigabit,5000.0,False,1.34375
+trn1.32xlarge,True,x86_64,64,2,128,,,524288,default,7600.0,8x 100 Gigabit,80000.0,False,21.5
+trn1n.32xlarge,True,x86_64,64,2,128,,,524288,default,7600.0,16x 100 Gigabit,80000.0,False,24.78
