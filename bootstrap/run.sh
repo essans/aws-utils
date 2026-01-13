@@ -184,8 +184,11 @@ run_step() {
   # added here:
   # After each step, re-source bashrc so any PATH/profile changes take effect
   if [[ -f "$HOME/.bashrc" ]]; then
+    set +u
+    # shellcheck disable=SC1090
     # Avoid failing the bootstrap if bashrc has interactive-only bits
     source "$HOME/.bashrc" || true
+    set -u
     log "SOURCED ~/.bashrc to refresh environment for subsequent steps"
   fi
   
