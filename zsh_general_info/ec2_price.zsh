@@ -14,7 +14,6 @@
 # 
 # Designed and tested to work in mac zsh
 
-$ 
 ec2_price() {
   local itype="$1"
   if [[ -z "$itype" ]]; then
