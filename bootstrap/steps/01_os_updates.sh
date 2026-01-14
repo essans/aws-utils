@@ -36,6 +36,22 @@ request_reboot_if_required() {
   fi
 }
 
+ensure_yq_installed() {
+  if have yq; then
+    log "yq already installed"
+    return 0
+  fi
+  if have snap; then
+    log "Installing yq via snap..."
+    sudo -n snap install yq || { log "❌ ERROR: snap install of yq failed"; return 1; }
+    return 0
+  fi
+  log "⚠️ WARNING: snap not available; yq not installed. Install yq manually or add it to dpkg/snap config."
+  return 1
+}
+
+
+
 log "=== STARTING OS UPDATES ==="
 
 
@@ -91,6 +107,9 @@ if ! command -v uv >/dev/null 2>&1; then
 else
   log "uv already installed."
 fi
+
+
+ensure_yq_installed || { log "❌ Cannot parse config without yq"; exit 1; }
 
 
 log "🔄 ...now installing packages found in config file"
