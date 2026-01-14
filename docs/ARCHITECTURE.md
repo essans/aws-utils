@@ -1,6 +1,6 @@
 # AWS-Utils Architecture
 
-## Project Overview
+## Project Overview (created with claude-code)
 
 **aws-utils** is a personal automation utility for streamlining the complete lifecycle of AWS EC2 instance management, from launch to fully-configured development environment in under 5 minutes.
 
