@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Set-up python tooling
+# Set-up python tooling (will not run if mamba is detected!)
 
 # To do:
-#  - Currently hardcoding ~/environments as the place where venvs are created.  Make this a config
+#  - 
 
 set -euo pipefail
 
@@ -20,6 +20,10 @@ require_sudo() {
 
 ensure_apt() {
   have apt-get || { log "❌ ERROR: apt-get not found."; exit 2; }
+}
+
+ensure_yq() {
+  have yq || { log "❌ ERROR: yq not found. Install with: sudo apt-get install -y yq"; exit 3; }
 }
 
 ensure_apt_pkg() {
@@ -48,13 +52,21 @@ pipx_install_if_missing() {
   pipx install "$tool"
 }
 
-log "=== STARTING PYTHON SETUP ==="
 
+# Check if mamba is installed - if so, skip this script
+# Check both PATH and the actual installation directory (in case shell not yet reloaded)
+if command -v mamba >/dev/null 2>&1 || command -v micromamba >/dev/null 2>&1 || [[ -f "$HOME/miniforge3/bin/mamba" ]]; then
+  log "⚠️  mamba or micromamba detected, skipping venv/python tooling setup"
+  log "================================================="
+  log "✅ SKIPPED PYTHON TOOLING USING VENV (USING MAMBA)"
+  log "================================================="
+  exit 0
+fi
 
 ensure_apt
+ensure_yq
 require_sudo
 
-log "Installing base Python packages..."
 sudo -n apt-get update -y
 
 # Parse python version/ppa from config.yaml with safe fallbacks
@@ -137,12 +149,12 @@ log "Added ~/.local/bin to PATH for current session"
 
 # Install common dev tools as isolated apps
 pipx_install_if_missing uv
-pipx_install_if_missing ruff
 
 # Extract venv directory from config file, fallback to default
-venv_name=$(yq -r '.python.venv // "venv"' "$config_file" 2>/dev/null || echo "venv")
+env_parent_subdir=$(yq -r '.python.env_dir_in_home // "environments"' "$config_file" 2>/dev/null || echo "environments")
+venv_name=$(yq -r '.python.venv // "default_venv"' "$config_file" 2>/dev/null || echo "default_venv")
 
-VENV_PARENT="$HOME/environments"
+VENV_PARENT="$HOME/$env_parent_subdir"
 mkdir -p "$VENV_PARENT"
 
 # Create a Python virtual environment if not already present
@@ -227,3 +239,8 @@ fi
 log "=========================="
 log "✅ Python tooling complete"
 log "=========================="
+
+
+log ""
+log "=== ▶️ === "
+log ""

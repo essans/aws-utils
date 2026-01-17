@@ -307,15 +307,19 @@ done
 # Summary logging
 log "==== Repo clone summary ===="
 if [[ ${#cloned_repos[@]} -gt 0 ]]; then
-  log "Successfully cloned: ${cloned_repos[*]}"
+  log "🟢 Successfully cloned: ${cloned_repos[*]}"
 else
-  log "No repos were successfully cloned."
+  log "🔴 No repos were successfully cloned."
 fi
 if [[ ${#failed_repos[@]} -gt 0 ]]; then
-  log "Failed to clone: ${failed_repos[*]}"
+  log "🔴 Failed to clone: ${failed_repos[*]}"
 fi
 
 
 log "=========================="
 log "✅ git etc set-up complete"
 log "=========================="
+
+log ""
+log "=== ▶️ === "
+log ""

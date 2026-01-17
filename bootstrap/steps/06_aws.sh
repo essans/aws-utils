@@ -142,3 +142,7 @@ print_post_checks
 log "======================"
 log "✅ AWS set-up complete"
 log "======================"
+
+log ""
+log "=== ▶️ === "
+log ""

@@ -8,6 +8,111 @@
 # 6. dpkgs, snap packages to install
 # 7. python tooling requirements, pip/pipx packages to install
 
+ec2_instance: # used for ec2_launch_bootstrap.py
+  family: g
+  type: g4dn.xlarge
+  max_price: 0.53
+  name: node1
+  ebs_storage: 256  # in gigabytes
+  ubuntu: 24.04
+  dlami: Y
+
+bootstraps: # xx_blah.sh to ignore a line.  DO NOT use # to comment out
+  00_preflight.sh
+  01_os_updates.sh
+  02_git_etc.sh
+  03_system_python.sh
+  04_mamba_python_tooling.sh
+  05_venv_python_tooling.sh
+  06_aws.sh
+  07_other_setups.sh
+  08_dlami_torch_verify.sh
+  09_claude_code.sh
+  10_ide_setup.sh
+  11_torch_setup.sh
+
+aws:
+  profile: default
+  region: us-east-1
+
+dirs:
+  - scripts
+  - wip
+  - temp
+  - documents
+
+git:
+  user:
+    name: NAME HERE
+    org: GITHUB REPO
+    email: YOU@EXAMPLE.COM
+
+  ssh_key: github
+  
+  projects_dir: github-es
+  projects_repos_to_clone:
+    ec2_test
+    claude_configs
+    llm_runner
+  
+  home_dir_repos_to_clone:
+    aws-utils
+    templates
+
+dpkg: #requires usual indents and dashes
+  - git
+  - gh
+  - jq
+  - tmux
+  - htop
+  - unzip
+  - curl
+  - wget
+  - ncdu
+  - iotop
+  - sysstat
+  - dnsutils
+  - net-tools
+  - rsync
+  - tree
+  - snap
+
+snap: #requires usual indents and dashes
+  - yq
+
+python:
+  version: default
+  ppa: deadsnakes/ppa # for specific python installs
+
+  mamba_env: default_env
+  mamba_python_version: 3.11
+
+  env_dir_in_home: environments # ignored if mamba detected
+  venv: default_env  # env created in ~environments/
+  
+  pip_install: # installs in venv or mamba as needed
+    - pandas
+    - numpy>=1.24.0
+    - boto3
+    - PyYAML
+    - requests
+    - s3fs
+    - tqdm
+    - urllib3
+
+pipx:
+  - black
+  - ruff
+# Things to update:
+# ================
+# 1. instance details when using ec2_launch_bootstrap.py
+# 2. xx_ out any steps that are not required
+# 3. aws defaults
+# 4. dirs you want to create
+# 5. git config info (careful before pushing to github as contains name, email etc)
+# 6. dpkgs, snap packages to install
+# 7. python tooling requirements, pip/pipx packages to install
+
 ec2_instance: # used only for ec2_launch_bootstrap.py
   family: g
   type: g4dn.xlarge

@@ -53,17 +53,20 @@ bootstrap/
     00_preflight.sh
     01_os_updates.sh
     02_git_etc.sh
-    03_python_tooling.sh
-    04_aws.sh
-    05_other_setups.sh
-    06_torch_setup.sh
-    07_dlami_torch_verify.sh
-    08_claude_code.sh
-    09_ide_setup.sh
+    03_system_python.sh
+    04_mamba_python_tooling.sh
+    05_venv_python_tooling.sh
+    06_aws.sh
+    07_other_setups.sh
+    08_dlami_torch_verify.sh
+    09_claude_code.sh
+    10_ide_setup.sh   
+    11_torch_setup.sh
 ```
 
 - Each `steps/NN_name.sh` is one unit of work.
 - `run.sh` handles logging, stamping, ordering, and reboot-resume.
+- See header of each script file for more info
 
 ---
 <br>

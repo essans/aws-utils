@@ -10,10 +10,10 @@
 
 ec2_instance: # used for ec2_launch_bootstrap.py
   family: t
-  type: t3a.2xlarge
-  max_price: 0.31
-  name: node0
-  ebs_storage: 256  # in gigabytes
+  type: t3a.large
+  max_price: 0.08
+  name: jump_box
+  ebs_storage: 32  # in gigabytes
   ubuntu: 24.04
   dlami: N
 
@@ -53,7 +53,6 @@ git:
   projects_repos_to_clone:
     ec2_test
     claude_configs
-    llm_runner
   
   home_dir_repos_to_clone:
     aws-utils
@@ -103,3 +102,7 @@ python:
 pipx:
   - black
   - ruff
+
+
+
+

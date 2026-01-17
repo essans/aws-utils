@@ -17,7 +17,7 @@
 # --> python -c "import torch; print(torch.cuda.is_available(), torch.version.cuda)"
 
 # To do:
-#  - known issue from prior steps.  allow venv directory to be a user-config rather than ~/evironments
+#  Currently uses venv only.  Update to use mamba too (or optionally)
 
 set -euo pipefail
 
@@ -45,16 +45,89 @@ log "=== STARTING TORCH SETUPS ==="
 
 config_file="${CONFIG_FILE:?ERROR: CONFIG_FILE environment variable not available}"
 
-# Read venv name from config, otherwise use torch
+# Check if mamba is installed (command or directory)
+USE_MAMBA=false
+if command -v mamba >/dev/null 2>&1 || command -v micromamba >/dev/null 2>&1 || [[ -f "$HOME/miniforge3/bin/mamba" ]]; then
+  USE_MAMBA=true
+  log "Mamba detected - will use mamba for torch installation"
+else
+  log "Mamba not detected - will use venv for torch installation"
+fi
+
+if [[ "$USE_MAMBA" == "true" ]]; then
+  # ============================================================================
+  # MAMBA PATH: Simplified torch installation using mamba
+  # ============================================================================
+  
+  # Source conda initialization if needed
+  if ! command -v mamba >/dev/null 2>&1; then
+    log "Sourcing miniforge3 initialization..."
+    if [[ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]]; then
+      source "$HOME/miniforge3/etc/profile.d/conda.sh"
+    fi
+  fi
+  
+  # Get mamba environment name from config
+  if have yq; then
+    MAMBA_ENV=$(yq -r '.python.mamba_env // "default"' "$config_file" 2>/dev/null || echo "default")
+  else
+    MAMBA_ENV="default"
+  fi
+  
+  log "Using mamba environment: $MAMBA_ENV"
+  
+  # Activate mamba environment
+  conda activate "$MAMBA_ENV"
+  
+  # Detect GPU for appropriate pytorch channel
+  if have nvidia-smi; then
+    log "NVIDIA GPU detected, installing PyTorch with CUDA support from conda-forge"
+    mamba install -y pytorch torchvision torchaudio pytorch-cuda -c pytorch -c nvidia
+  else
+    log "No NVIDIA GPU detected, installing CPU-only PyTorch from conda-forge"
+    mamba install -y pytorch torchvision torchaudio cpuonly -c pytorch
+  fi
+  
+  log "Verifying torch install..."
+  torch_verify_output=$(
+python - <<'PY'
+import torch, sys
+print("torch:", torch.__version__)
+print("python:", sys.version.split()[0])
+print("cuda available:", torch.cuda.is_available())
+print("cuda runtime (torch):", torch.version.cuda)
+if torch.cuda.is_available():
+    print("device count:", torch.cuda.device_count())
+    print("device 0:", torch.cuda.get_device_name(0))
+PY
+  )
+  while IFS= read -r line; do
+    log "$line"
+  done <<< "$torch_verify_output"
+  
+  log "========================"
+  log "✅ Torch setup completed (mamba)"
+  log "========================"
+  exit 0
+fi
+
+# =============
+# IF USING VENV
+# =============
+
+# Read env configuration from config file
 if [[ -f "$config_file" ]]; then
   if have yq; then
+    env_dir_in_home=$(yq -r '.python.env_dir_in_home // "environments"' "$config_file" 2>/dev/null || echo "environments")
     TORCH_ENV_NAME=$(yq -r '.python.venv // "torch"' "$config_file" 2>/dev/null || echo "torch")
   else
-    log "yq not installed; using default venv name 'torch'"
+    log "yq not installed; using defaults"
+    env_dir_in_home="environments"
     TORCH_ENV_NAME="torch"
   fi
 else
-  log "Config file not found; using default venv name 'torch'"
+  log "Config file not found; using defaults"
+  env_dir_in_home="environments"
   TORCH_ENV_NAME="torch"
 fi
 
@@ -64,7 +137,7 @@ TORCH_VARIANT="${TORCH_VARIANT:-auto}"   # auto|cpu|cu118|cu121|cu124|cu130
 TORCH_VERSION="${TORCH_VERSION:-}"       # e.g. 2.5.1 (optional)
 EXTRA_PIP_PACKAGES="${EXTRA_PIP_PACKAGES:-}"  # e.g. "numpy pandas transformers"
 
-VENV_DIR="${VENV_DIR:-$HOME/environments}"
+VENV_DIR="$HOME/$env_dir_in_home"
 ENV_PATH="$VENV_DIR/$TORCH_ENV_NAME"
 
 
@@ -223,5 +296,11 @@ while IFS= read -r line; do
 done <<< "$torch_verify_output"
 
 log "========================"
-log "✅ Torch setup completed"
+log "✅ Torch setup completed (venv)"
 log "========================"
+
+
+log ""
+log "=== ▶️ === "
+log ""
+

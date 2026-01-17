@@ -24,7 +24,7 @@ fail() {
 log "=== STARTING PREFLIGHT CHECKS ==="
 
 # ---------- OS ----------
-log "Checking OS..."
+log "🔍 Checking OS..."
 uname -a || fail "uname failed"
 
 # Using -f test operator to check for /etc/os-release
@@ -52,7 +52,7 @@ log "Shell: $SHELL"
 bash --version | head -n 1 || fail "bash not available"
 
 # ---------- disk space ----------
-log "Checking disk space..."
+log "🔍 Checking disk space..."
 df -h / | awk 'NR==1 || NR==2 {print}' #awk first and second lines only
 avail_kb="$(df --output=avail / | tail -n1)" #tail last line
 log "Available space: $avail_kb"
@@ -62,7 +62,7 @@ if [[ "$avail_kb" -lt $((5 * 1024 * 1024)) ]]; then
 fi
 
 # ---------- network ----------
-log "Checking network connectivity..."
+log "🔍 Checking network connectivity..."
 if have ping; then
   ping -c 1 -W 3 8.8.8.8 >/dev/null 2>&1 || fail "No network connectivity (ping failed)"
 else
@@ -72,31 +72,31 @@ log "  Network available"
 fi
 
 # ---------- DNS ----------
-log "Checking DNS..."
+log "🔍 Checking DNS..."
 # "get entries" from system databases
 getent hosts github.com >/dev/null 2>&1 || fail "DNS resolution failed (github.com)"
 log "  Succeeded"
 
 # ---------- sudo ----------
-log "Checking sudo (non-interactive)..."
+log "🔍 Checking sudo (non-interactive)..."
 if ! sudo -n true 2>/dev/null; then
   fail "sudo would prompt for password (non-interactive required)"
 log "  Non-interactive mode confirmed"
 fi
 
 # ---------- time ----------
-log "Checking system time..."
+log "🔍 Checking system time..."
 date -Is || fail "date failed"
 log "  ok"
 
 # ---------- permissions ----------
-log "Checking write permissions..."
+log "🔍 Checking write permissions..."
 touch "$HOME/.bootstrap_write_test" || fail "Cannot write to \$HOME"
 rm -f "$HOME/.bootstrap_write_test"
 log "  Able to write"
 
 # ---------- memory ----------
-log "Checking memory..."
+log "🔍 Checking memory..."
 mem_total_kb="$(awk '/MemTotal/ {print $2}' /proc/meminfo)" # awk 2nd field when matched
 mem_total_gb=$((mem_total_kb / 1024 / 1024))
 log "Total memory: ${mem_total_gb} GB"
@@ -106,7 +106,7 @@ if [[ "$mem_total_kb" -lt $((1 * 1024 * 1024)) ]]; then
 fi
 
 # ---------- CPU ----------
-log "Checking CPU..."
+log "🔍 Checking CPU..."
 cpu_model="$(awk -F: '/model name/ {print $2; exit}' /proc/cpuinfo | xargs)"
 cpu_cores="$(nproc)"
 log "CPU model: $cpu_model"
@@ -118,7 +118,7 @@ fi
 
 # ---------- open ports ----------
 # ss -tuln displays all TCP and UDP sockets that are currently listening
-log "Checking open (listening) ports..."
+log "🔍 Checking open (listening) ports..."
 if have ss; then
   log "Open ports (ss):"
   ss -tuln | awk 'NR==1 || /LISTEN/' | while read -r line; do log "$line"; done
@@ -132,4 +132,9 @@ fi
 log "============================"
 log "✅ Preflight checks PASSED."
 log "============================"
+
+log ""
+log "=== ▶️ === "
+log ""
+
 

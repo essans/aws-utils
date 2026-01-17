@@ -62,3 +62,8 @@ done
 log "============================="
 log "✅ local directories created."
 log "============================="
+
+log ""
+log "=== ▶️ === "
+log ""
+

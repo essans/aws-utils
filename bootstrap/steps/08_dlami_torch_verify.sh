@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 # For aws deep-learning AMIs a script to verify default torch set-up
+# 
+# Tested with venv only!
+
+# To do:
+#  - will this work with mamba ??
 
 set -euo pipefail
 
@@ -128,3 +133,7 @@ fi
 log "============================"
 log "✅ aws dlami-check completed"
 log "============================"
+
+log ""
+log "=== ▶️ === "
+log ""
