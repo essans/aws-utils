@@ -16,14 +16,13 @@
 
 
 Notes:
-  - instanceFamily: m7a
-    vCPUs: 8
-    # choose one of:
-    cpuCores/threads: A) 8 cores x 1 threads (SMT on)  OR  B) 4 cores x 2 thread (SMT off)
-    memory(MiB): 32768
+  - instanceFamily: m7i
+    vCPUs: 2
+    cpuCores/threads: 1 core, 2 threads each
+    memory(MiB): 8192
     netPerf: Up to 12.5 Gigabit
-    ebsBWMbps: ~2500
-    usdPHr: 0.4637
+    ebsBWMbps: ~650
+    usdPHr: 0.1008
 
 TagSpecifications:
   - ResourceType: instance
@@ -36,7 +35,7 @@ TagSpecifications:
         Value: ec2_node
 
 ImageId: ami-0b6c6ebed2801a5cb
-InstanceType: m7a.2xlarge
+InstanceType: m7i.large
 KeyName: default_ed25519
 MinCount: 1
 MaxCount: 1
@@ -46,13 +45,9 @@ IamInstanceProfile:
 
 # ----- A) SMT ON (8 cores x 1 threads = 8 vCPUs) -----
 CpuOptions:
-  CoreCount: 8
-  ThreadsPerCore: 1
+  CoreCount: 1
+  ThreadsPerCore: 2
 
-# ----- B) SMT OFF (4 cores x 2 thread = 8 vCPUs) -----
-# CpuOptions:
-#   CoreCount: 8
-#   ThreadsPerCore: 1
 
 BlockDeviceMappings:
   - DeviceName: /dev/sda1
