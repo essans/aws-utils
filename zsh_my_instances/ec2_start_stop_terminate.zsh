@@ -139,7 +139,6 @@ function ec2_terminate() {
   local instance_name="$1"
   local instance_id
 
-  # You said you already have this helper.
   instance_id="$(ec2_get_id "$instance_name")" || {
     echo "❌ Error: Failed to resolve instance ID for name: $instance_name"
     return 1
@@ -150,18 +149,16 @@ function ec2_terminate() {
     return 1
   fi
 
-  # Optional: sanity check that exactly one instance matched (if your ec2_get_id can output many)
-  If ec2_get_id can return multiple, uncomment this block:
   if [[ "$(wc -w <<<"$instance_id")" -ne 1 ]]; then
     echo "❌ Error: Multiple instances matched Name '$instance_name': $instance_id"
     return 1
   fi
 
-  echo "[..]Termination initiated for $instance_name ($instance_id)."
-  echo "[..]Removing Name tag from $instance_id ..."
-  if ! aws ec2 delete-tags --resources "$instance_id" --tags Key=Name >/dev/null; then
-    echo "⚠️ Warning: Could not remove Name tag (insufficient perms or already absent). Continuing…"
-  fi
+  #echo "[..]Termination initiated for $instance_name ($instance_id)."
+  #echo "[..]Removing Name tag from $instance_id ..."
+  #if ! aws ec2 delete-tags --resources "$instance_id" --tags Key=Name >/dev/null; then
+  #  echo "⚠️ Warning: Could not remove Name tag (insufficient perms or already absent). Continuing…"
+  #fi
 
   echo "Terminating instance $instance_id ..."
   if ! aws ec2 terminate-instances --instance-ids "$instance_id" >/dev/null; then
@@ -169,7 +166,6 @@ function ec2_terminate() {
     return 1
   fi
 
-  # Optionally wait until it's fully terminated (uncomment if you want blocking behavior)
   echo "[..]Waiting for instance to reach 'terminated' state..."
   aws ec2 wait instance-terminated --instance-ids "$instance_id" || {
     echo "❌ Warning: Waiter failed or timed out."
