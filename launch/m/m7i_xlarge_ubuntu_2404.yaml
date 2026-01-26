@@ -35,7 +35,7 @@ TagSpecifications:
         Value: ec2_node
 
 ImageId: ami-0b6c6ebed2801a5cb
-InstanceType: m7i.large
+InstanceType: m7i.xlarge
 KeyName: default_ed25519
 MinCount: 1
 MaxCount: 1

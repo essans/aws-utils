@@ -16,6 +16,9 @@
 # Requirements:
 #   - AWS CLI configured
 #   - macOS zsh environment
+#
+# To do:
+#   - grab ssh key from config and insert into completion message
 
 AWSLOGS=$HOME/logs/aws
  
@@ -97,9 +100,9 @@ function ec2_start() {
   echo
   if [[ "$public_ip" != "None" ]]; then
     echo "👉Quick connect:"
-    echo "  ssh -i /path/to/your/key.pem ubuntu@${public_ip}"
+    echo "  ssh -A -i /path/to/your/key.pem ubuntu@${public_ip}"
     echo "  # For Amazon Linux images, use:"
-    echo "  ssh -i /path/to/your/key.pem ec2-user@${public_ip}"
+    echo "  ssh -A -i /path/to/your/key.pem ec2-user@${public_ip}"
   else
     echo "[note] No public IP detected. Ensure your subnet/ENI has AssociatePublicIpAddress=true,"
     echo "       or connect via private IP + VPN/DirectConnect, or use SSM Session Manager."
@@ -154,11 +157,7 @@ function ec2_terminate() {
     return 1
   fi
 
-  #echo "[..]Termination initiated for $instance_name ($instance_id)."
-  #echo "[..]Removing Name tag from $instance_id ..."
-  #if ! aws ec2 delete-tags --resources "$instance_id" --tags Key=Name >/dev/null; then
-  #  echo "⚠️ Warning: Could not remove Name tag (insufficient perms or already absent). Continuing…"
-  #fi
+  echo "[..]Termination initiated for $instance_name ($instance_id)."
 
   echo "Terminating instance $instance_id ..."
   if ! aws ec2 terminate-instances --instance-ids "$instance_id" >/dev/null; then
@@ -172,6 +171,11 @@ function ec2_terminate() {
   }
 
   echo "✅ Successfully terminated '$instance_name': $instance_id"
+
+  echo "[..]Removing Name tag from $instance_id ..."
+  if ! aws ec2 delete-tags --resources "$instance_id" --tags Key=Name >/dev/null; then
+   echo "⚠️ Warning: Could not remove Name tag"
+  fi
 
   local event="ec2-terminate-instance"
   local attribute="${instance_name}_${instance_id}"
