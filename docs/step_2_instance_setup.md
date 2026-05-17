@@ -62,6 +62,8 @@ bootstrap/
     09_claude_code.sh
     10_ide_setup.sh   
     11_torch_setup.sh
+    12_codex.sh
+    13_tailscale.sh
 ```
 
 - Each `steps/NN_name.sh` is one unit of work.
