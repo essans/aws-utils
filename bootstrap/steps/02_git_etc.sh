@@ -162,6 +162,22 @@ log "=== Step 02: git set-up ==="
 # Parse YAML for git user.name, user.email and other details
 config_file="${CONFIG_FILE:?ERROR: CONFIG_FILE environment variable not available}"
 
+read_repo_list() {
+  local key="$1"
+  local raw=""
+
+  # Try list-style first (works for most yq variants).
+  raw="$(yq -r ".git.${key}[]?" "$config_file" 2>/dev/null || true)"
+
+  # If no list values found, try scalar-style value.
+  if [[ -z "${raw//[[:space:]]/}" || "$raw" == "null" ]]; then
+    raw="$(yq -r ".git.${key} // \"\"" "$config_file" 2>/dev/null || true)"
+  fi
+
+  # Normalize to a single space-separated list for shell loops.
+  echo "$raw" | tr '\t\n' '  ' | tr -s ' ' | sed 's/^ *//; s/ *$//' | sed 's/^null$//'
+}
+
 if [[ -f "$config_file" ]]; then
 
   git_user_name=$(yq '.git.user.name' "$config_file")
@@ -176,12 +192,11 @@ if [[ -f "$config_file" ]]; then
   local_dir_name=$(yq '.git.projects_dir' "$config_file")
   log "projects_dir: $local_dir_name"
 
-  # Extract projects_repos_to_clone as a space-separated list
-  projects_repos_to_clone=$(yq -r '.git.projects_repos_to_clone | split(" ") | join(" ")' "$config_file")
+  # Extract repo lists as normalized space-separated lists.
+  projects_repos_to_clone=$(read_repo_list 'projects_repos_to_clone')
   log "projects_repos_to_clone: $projects_repos_to_clone"
 
-  # Extract home_dir_repos_to_clone as a space-separated list
-  home_dir_repos_to_clone=$(yq -r '.git.home_dir_repos_to_clone | split(" ") | join(" ")' "$config_file")
+  home_dir_repos_to_clone=$(read_repo_list 'home_dir_repos_to_clone')
   log "home_dir_repos_to_clone: $home_dir_repos_to_clone"
 
 else

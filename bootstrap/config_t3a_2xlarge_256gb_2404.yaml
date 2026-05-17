@@ -51,13 +51,13 @@ git:
   
   projects_dir: github-es
   projects_repos_to_clone:
-    ec2_test
-    claude_configs
-    llm_runner
+    - ec2_test
+    - claude_configs
+    - llm_runner
   
   home_dir_repos_to_clone:
-    aws-utils
-    templates
+    - aws-utils
+    - templates
 
 dpkg: #requires usual indents and dashes
   - git

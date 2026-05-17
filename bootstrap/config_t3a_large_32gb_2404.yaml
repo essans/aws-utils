@@ -27,9 +27,11 @@ bootstraps: # xx_blah.sh to ignore a line.  DO NOT use # to comment out
   06_aws.sh
   07_other_setups.sh
   xx_dlami_torch_verify.sh
-  09_claude_code.sh
+  xx_claude_code.sh
   10_ide_setup.sh
   11_torch_setup.sh
+  12_codex.sh
+  13_tailscale.sh
 
 aws:
   profile: default
@@ -51,12 +53,12 @@ git:
   
   projects_dir: github-es
   projects_repos_to_clone:
-    ec2_test
-    claude_configs
+    - ec2_test
+    - claude_configs
   
   home_dir_repos_to_clone:
-    aws-utils
-    templates
+    - aws-utils
+    - templates
 
 dpkg: #requires usual indents and dashes
   - git
