@@ -73,5 +73,4 @@ Follow the initial set-up instructions [here](docs/step_0_overview_setup.md) the
 
 #### To do / Future Work
 - add additional bootstrap steps (eg docker, olama, tailscale etc)
-- convert .zsh scripts to .sh so that they are shell-agnostic
 - extend for gcp/azure, lambda.ai 

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-# chmod +x /Users/essans/aws-utils/zsh_general_info/ec2_price.zsh
+# chmod +x ~/aws-utils/zsh_general_info/ec2_price.sh
 
+# Substantial updates Sep-2026
 
 # Wrapper script to quickly launch and bootstrap an EC2 instance based on a config file:
 #  - Loads instance details from bootstrap/config*.yaml
-#  - Confirms current price is < max using ec2_price.zsh
+#  - Confirms current price is < max using ec2_price.sh
 #  - Launches instance from matching template YAML using ec2_launch_from_yaml.py
 #  - scp's the required bootstrap script files and config to remote machine
 #  - sends command to execute inside a tmux sesssion on remote machine
@@ -94,17 +95,17 @@ def check_instance_price(instance_type: str, max_price: float) -> bool:
     """Check current EC2 instance price"""
     
     script_dir = SH_SCRIPTS_DIR
-    ec2_price_script = script_dir / "ec2_price.zsh"
+    ec2_price_script = script_dir / "ec2_price.sh"
 
     if not ec2_price_script.exists():
         aws_log(event=EVENT, 
-                attribute=f"❌ Error: ec2_price.zsh not found: {ec2_price_script}", verbose=True)
+                attribute=f"❌ Error: ec2_price.sh not found: {ec2_price_script}", verbose=True)
         sys.exit(1)
 
     try:
         cmd = f"source {ec2_price_script} && ec2_price {instance_type}"
         result = subprocess.run(
-            ["zsh", "-c", cmd],
+            ["bash", "-c", cmd],
             capture_output=True,
             text=True,
             check=True
@@ -112,19 +113,19 @@ def check_instance_price(instance_type: str, max_price: float) -> bool:
         output = result.stdout.strip()
         if not output:
             aws_log(event=EVENT, 
-                attribute=f"❌ Error: No output from ec2_price.zsh", verbose=True)
+                attribute=f"❌ Error: No output from ec2_price.sh", verbose=True)
 
             sys.exit(1)
         current_price = float(output)
         
     except subprocess.CalledProcessError as e:
         aws_log(event=EVENT, 
-                attribute=f"❌ Error running ec2_price.zsh: {e.stderr}", verbose=True)
+                attribute=f"❌ Error running ec2_price.sh: {e.stderr}", verbose=True)
 
         sys.exit(1)
     except ValueError:
         aws_log(event=EVENT, 
-                attribute=f"❌ Error: Could not parse price '{output}' from ec2_price.zsh", 
+                attribute=f"❌ Error: Could not parse price '{output}' from ec2_price.sh", 
                 verbose=True)
 
         sys.exit(1)
@@ -177,7 +178,10 @@ def wait_for_ssh(host: str, port: int = 22, timeout: int = 300, interval: int = 
     return False
 
 
-def launch_instance(template_path: str, instance_name: str, storage_size: int, config_path: str, interactive: bool = False) -> None:
+def launch_instance(template_path: str, instance_name: str, storage_size: int,
+                    config_path: str, interactive: bool = False,
+                    profile: str | None = None,
+                    region: str | None = None) -> None:
     """Execute ec2_launch_from_yaml.py with the appropriate inputs"""
     
     script_dir = Path(__file__).parent
@@ -220,6 +224,13 @@ def launch_instance(template_path: str, instance_name: str, storage_size: int, c
         "--name", instance_name,
         "--storage", str(storage_size)
     ]
+
+    # Forward aws.profile / aws.region from the bootstrap config (or the CLI
+    # overrides) so the launch subprocess targets the same account/region.
+    if profile:
+        cmd += ["--profile", profile]
+    if region:
+        cmd += ["--region", region]
 
     aws_log(event=EVENT, 
                 attribute=f"🔄 Launching instance: {instance_name}", 
@@ -425,6 +436,10 @@ def main() -> None:
     parser.add_argument("config", help="Path to configuration YAML file")
     parser.add_argument("-i", "--interactive", action="store_true", 
                         help="Prompt for confirmation before scp and remote execution")
+    parser.add_argument("--profile", default=None,
+                        help="AWS profile; overrides aws.profile in config")
+    parser.add_argument("--region", default=None,
+                        help="AWS region; overrides aws.region in config")
 
     args = parser.parse_args()
 
@@ -444,6 +459,22 @@ def main() -> None:
 
     aws_log(event=EVENT, attribute="validated configuration file")
 
+    # aws.profile / aws.region: CLI flag wins, else the config YAML.
+    # A profile of "default" (or empty) is treated as "use the ambient default
+    # credential resolution" -- passing --profile default would fail on a host
+    # that has no [default] section (e.g. an EC2 box using an instance role).
+    aws_config = config.get("aws", {}) or {}
+    profile = args.profile or aws_config.get("profile")
+    if profile in (None, "", "default"):
+        profile = None
+    region = args.region or aws_config.get("region") or None
+
+    if profile or region:
+        aws_log(event=EVENT,
+                attribute=(f"Using AWS profile={profile or '<default>'} "
+                           f"region={region or '<default>'}"),
+                verbose=True)
+
     print(f"🔄 Loading configuration from {args.config}")
     print(f"Instance type: {ec2_config['type']}, Max price: ${ec2_config['max_price']}/hr")
 
@@ -462,7 +493,9 @@ def main() -> None:
         ec2_config["name"],
         ec2_config["ebs_storage"],
         args.config,
-        args.interactive
+        args.interactive,
+        profile,
+        region
     )
 
 if __name__ == "__main__":

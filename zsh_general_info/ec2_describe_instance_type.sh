@@ -1,7 +1,7 @@
 # script that wraps around aws cli function to describe an user provided instance and provides 
 # pre-determind details about that instance
 
-# written to run on a mac in zsh shell.  Not tested outside of mac
+# Portable across bash (Linux) and zsh (macOS)
 
 function ec2_describe_instance_type() {
     if [ -z "$1" ]; then

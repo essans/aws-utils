@@ -9,7 +9,7 @@ It takes advantage of the modularity of the tools seen in the previous steps.
 `ec2_launch_bootstrap.py` is a wrapper script that does the following:
 
 - Loads instance details from top section of ~/aws-utils/bootstrap/config.yaml
-- Confirms current price is less than max specified using `ec2_price.zsh`
+- Confirms current price is less than max specified using `ec2_price.sh`
 - Launches instance from matching template YAML using `ec2_launch_from_yaml.py`
 - Runs `scp` command to copy bootstrap script files to remote machine
 - sends via `ssh` the `run.sh` command and relevant --args which launches in a tmux session on the remote machine

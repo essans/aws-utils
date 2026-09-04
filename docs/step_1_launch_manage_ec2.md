@@ -14,6 +14,8 @@ This section provides an overview of the various command-line utilities availabl
 
 `ec2_my_instances` - shows all your EC2 instances (if you have any) with key details
 
+`ec2_my_instances --json` - same, but as JSON instead of a table (easier to read on a phone, and pipeable into `jq`)
+
 ---
 
 `ec2_describe_instance_type <instance>` - shows details of a given instance type
@@ -87,7 +89,7 @@ ec2_specs_price.py --pattern "g4dn" --price --save "g4dn.csv"
 
 ### (3) Info and actions relating to *existing* instances and AWS services
 
-`ec2_my_instances` - shows all your EC2 instances with key details including tags
+`ec2_my_instances` - shows all your EC2 instances with key details including tags (add `--json` for JSON output instead of a table)
 
 `ec2_start <instance-tag>` 
 `ec2_stop <instance-tag>`

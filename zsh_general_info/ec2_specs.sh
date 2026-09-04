@@ -6,7 +6,7 @@
 #
 # Requires jq installed for JSON parsing
 #
-# Designed and tested to work in mac zsh
+# Portable across bash (Linux) and zsh (macOS)
       
 ec2_specs() {
   local fam="${1:-t}"

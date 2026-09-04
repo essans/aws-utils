@@ -10,7 +10,7 @@
 #
 # Requirements:
 #   - AWS CLI configured
-#   - macOS zsh environment
+#   - bash (Linux) or zsh (macOS); sourced via shellrc.sh
 
 
 

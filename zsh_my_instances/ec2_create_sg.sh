@@ -14,17 +14,9 @@
 #
 # Requirements:
 #   - AWS CLI configured
-#   - macOS zsh environment
+#   - bash (Linux) or zsh (macOS); sourced via shellrc.sh
 
-AWSLOGS=$HOME/logs/aws
-
-function aws_log() {
-    local event="$1"
-    local attribute="$2"
- 
-    echo $(date +%Y-%m-%dT%H:%M:%S) - $event - $attribute - "$DEVICE"_$(curl -s https://checkip.amazonaws.com)/32 >> "$AWSLOGS"/aws_cli.log
-  
-} 
+# AWSLOGS and aws_log() are defined once in shellrc.sh
 
 
 # Create (or reuse) a Security Group and tag it with a Name

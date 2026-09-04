@@ -15,21 +15,12 @@
 #
 # Requirements:
 #   - AWS CLI configured
-#   - macOS zsh environment
+#   - bash (Linux) or zsh (macOS); sourced via shellrc.sh
 #
 # To do:
 #   - grab ssh key from config and insert into completion message
 
-AWSLOGS=$HOME/logs/aws
- 
-    
-function aws_log() {
-    local event="$1"
-    local attribute="$2"
- 
-    echo $(date +%Y-%m-%dT%H:%M:%S) - $event - $attribute - "$DEVICE"_$(curl -s https://checkip.amazonaws.com)/32 >> "$AWSLOGS"/aws_cli.log
-  
-} 
+# AWSLOGS and aws_log() are defined once in shellrc.sh
 
 # see/update standalone file for source 
 function ec2_get_id() {

@@ -13,7 +13,7 @@
 #   ec2_images_ubuntu amd64
 #   ec2_images_ubuntu arm64 22.04
 
-# Designed and tested to run in mac zsh
+# Portable across bash (Linux) and zsh (macOS)
 
 function ec2_images_ubuntu() {
     local itype="$1"

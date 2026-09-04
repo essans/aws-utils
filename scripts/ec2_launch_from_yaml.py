@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# chmod +x /Users/essans/aws-utils/zsh_general_info/ec2_price.zsh
+# chmod +x ~/aws-utils/zsh_general_info/ec2_price.sh
 
 
 # -----------------------------------------------------------------------------

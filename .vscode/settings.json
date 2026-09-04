@@ -4,8 +4,11 @@
     "terminal.integrated.env.osx": {
         "PYTHONPATH": "${workspaceFolder}/src:${workspaceFolder}/configs"
     },
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/src:${workspaceFolder}/configs"
+    },
     "jupyter.notebookFileRoot": "${workspaceFolder}",
-    "python.defaultInterpreterPath": "~/environments/venv/bin/python",
+    "python.defaultInterpreterPath": "~/environments/aws-utils/bin/python",
 
     // Prefer modern, reasonably strict type checking
     "python.analysis.typeCheckingMode": "basic", // "standard"

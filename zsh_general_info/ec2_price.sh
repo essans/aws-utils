@@ -12,7 +12,7 @@
 #
 # Requires jq package installed for json parsing
 # 
-# Designed and tested to work in mac zsh
+# Portable across bash (Linux) and zsh (macOS)
 
 ec2_price() {
   local itype="$1"

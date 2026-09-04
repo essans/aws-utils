@@ -1,6 +1,6 @@
 
 # List amazon-owned Deep Learning AMIs (DLAMI) but calling aws api for describe images
-# Designed and tested to work on a mac in zsh
+# Portable across bash (Linux) and zsh (macOS)
 
 # Usage:
 #   ec2_images_dlami [arch] [filter]

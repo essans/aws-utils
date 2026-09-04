@@ -39,56 +39,37 @@ chmod +x ~/aws-utils/scripts/*
 
 <br>
 
-(ii) Add the following to the `.bash_profile`,  `.zshrc` (or equiv) file:
+(ii) Add a single line to your shell rc file. The repo ships `shellrc.sh`, which
+works in both bash (Linux) and zsh (macOS) -- it sets `AWS_UTILS`, `DEVICE` and
+`AWSLOGS` (creating `~/logs/aws` if missing), puts `scripts/` on `PATH`, defines
+the shared `aws_log` helper, and sources every function file.
 
-_[To-do: shell script to do this automatically]_  
+macOS -- add to `~/.zshrc`:
 
 ```sh
 # --- AWS UTILS SET-UP ----
-
-AWS_UTILS=$HOME/aws-utils
-export DEVICE=$(hostname -s)
-
-export PATH="$AWS_UTILS/scripts:$PATH"
-
-
-#############################
-# AWS FUNCTIONS AND ALIASES #
-#############################
-
-
-for file in "$AWS_UTILS"/zsh_general_info/*.zsh; do
-  source "$file"
-done
-
-
-for file in "$AWS_UTILS"/zsh_my_instances/*.zsh; do
-  source "$file"
-done
-
-
-function ec2_show_functions() {
-echo "-----------------"
-    for file in "$AWS_UTILS"/zsh_general_info/*.zsh; do
-    echo $file
-    done
-echo " "
-
-    for file in "$AWS_UTILS"/zsh_my_instances/*.zsh; do
-    echo $file
-    done
-echo "----------------"
-}
-
-# --- END AWS UTILS SET-UP ----
-
+source ~/aws-utils/shellrc.sh
 ```
+
+Linux -- add the same line to `~/.bashrc`:
+
+```sh
+# --- AWS UTILS SET-UP ----
+source ~/aws-utils/shellrc.sh
+```
+
+`shellrc.sh` locates the repo from its own path, so the clone does not have to
+live at `~/aws-utils`; adjust the `source` line to wherever you cloned it.
 
 (iii) Next, `source` the file to load the settings. eg.
 
 ```sh
-source ~/.zshrc
+source ~/.zshrc     # macOS
+source ~/.bashrc    # Linux
 ```
+
+Run `ec2_show_functions` to list what got loaded.
+
 <br>
 
 
@@ -196,3 +177,56 @@ _Ensure that the policy is attached to the IAM user/role you are using to run th
 ---<br>
 
 __(5) Now go to the next step: [Step-1: Launch/Manage EC2 Instances](step_1_launch_manage_ec2.md)__
+
+---
+
+### Legacy Setup Instructions (ignore!):
+
+(ii) Add the following to the `.bash_profile`,  `.zshrc` (or equiv) file:
+
+
+```sh
+# --- AWS UTILS SET-UP ----
+
+AWS_UTILS=$HOME/aws-utils
+export DEVICE=$(hostname -s)
+
+export PATH="$AWS_UTILS/scripts:$PATH"
+
+
+#############################
+# AWS FUNCTIONS AND ALIASES #
+#############################
+
+
+for file in "$AWS_UTILS"/zsh_general_info/*.zsh; do
+  source "$file"
+done
+
+
+for file in "$AWS_UTILS"/zsh_my_instances/*.zsh; do
+  source "$file"
+done
+
+
+function ec2_show_functions() {
+echo "-----------------"
+    for file in "$AWS_UTILS"/zsh_general_info/*.zsh; do
+    echo $file
+    done
+echo " "
+
+    for file in "$AWS_UTILS"/zsh_my_instances/*.zsh; do
+    echo $file
+    done
+echo "----------------"
+}
+
+# --- END AWS UTILS SET-UP ----
+
+```
+
+(iii) Next, `source` the file to load the settings. eg.
+
+```sh
+source ~/.zshrc
