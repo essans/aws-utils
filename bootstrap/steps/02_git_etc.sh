@@ -256,8 +256,12 @@ ensure_known_host github.com
 # -----------------------------------------------
 
 log "Checking GitHub SSH authentication..."
-if ! test_github_ssh; then
-  log "⚠️ WARNING: GitHub SSH authentication failed. Private repos will not be accessible."
+if test_github_ssh; then
+  github_ssh_ok=1
+else
+  github_ssh_ok=0
+  log "⚠️ WARNING: GitHub SSH authentication failed. Private repos will not be"
+  log "   accessible, and public repos will be cloned read-only over HTTPS."
 fi
 
 repos_to_clone=""
@@ -291,29 +295,42 @@ for repo_path in $repos_to_clone; do
     continue
   fi
 
-  log "Checking if $repo is public..."
-  # Prevent git from prompting for credentials
-  if GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=true git ls-remote "$https_url" &>/dev/null; then
-    log "Repo $repo is public. Attempting HTTPS clone..."
-    if GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=true git clone "$https_url" "$dest" &>/dev/null; then
-      log "Successfully cloned public repo: $repo to $dest"
+  # SSH is tried first whenever the key works, for BOTH public and private repos.
+  # An anonymous HTTPS clone is read-only: it succeeds, but leaves an origin that
+  # prompts for GitHub credentials on the first push. HTTPS is therefore only the
+  # fallback, for public repos on a box with no working GitHub key.
+  cloned=0
+  if [[ "$github_ssh_ok" -eq 1 ]]; then
+    log "Attempting SSH clone of $repo..."
+    if git clone "$ssh_url" "$dest" >/dev/null 2>&1; then
+      log "Successfully cloned $repo to $dest (ssh)"
       cloned_repos+=("$repo")
+      cloned=1
     else
-      log "❌ FAILED to clone public repo: $repo to $dest"
-      failed_repos+=("$repo (public, clone error)")
+      log "SSH clone of $repo failed (repo may not exist, or key lacks access)."
+      # git removes what it created on failure; clear any empty leftover so the
+      # HTTPS fallback below does not trip over an existing destination path.
+      rmdir "$dest" 2>/dev/null || true
     fi
-  else
-    log "Repo $repo is private or inaccessible via HTTPS. Attempting SSH clone..."
-    if test_github_ssh; then
-      if git clone "$ssh_url" "$dest" &>/dev/null; then
-        log "Successfully cloned private repo: $repo to $dest"
+  fi
+
+  if [[ "$cloned" -eq 0 ]]; then
+    log "Checking if $repo is public..."
+    # Prevent git from prompting for credentials
+    if GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=true git ls-remote "$https_url" >/dev/null 2>&1; then
+      log "Repo $repo is public. Cloning over HTTPS (read-only; push will prompt)..."
+      if GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=true git clone "$https_url" "$dest" >/dev/null 2>&1; then
+        log "Successfully cloned $repo to $dest (https, read-only)"
         cloned_repos+=("$repo")
       else
-        log "❌ FAILED to clone private repo: $repo to $dest"
-        failed_repos+=("$repo (private, clone error)")
+        log "❌ FAILED to clone public repo: $repo to $dest"
+        failed_repos+=("$repo (public, clone error)")
       fi
+    elif [[ "$github_ssh_ok" -eq 1 ]]; then
+      log "❌ FAILED to clone $repo: SSH clone failed and repo is not public."
+      failed_repos+=("$repo (ssh clone failed, not public)")
     else
-      log "Cannot clone private repo $repo: GitHub SSH authentication failed."
+      log "Cannot clone $repo: not public over HTTPS and GitHub SSH auth unavailable."
       failed_repos+=("$repo (private, no SSH auth)")
     fi
   fi
